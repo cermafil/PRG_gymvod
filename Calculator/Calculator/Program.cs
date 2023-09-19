@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 /*
  * Made by Jan Borecky for PRG seminar at Gymnazium Voderadska, year 2023-2024.
@@ -13,6 +14,7 @@ namespace Calculator
 {
     internal class Program
     {
+
         static void Main(string[] args)
         {
             /*
@@ -40,10 +42,43 @@ namespace Calculator
             //Tento komentar smaz a misto nej zacni psat svuj prdacky kod.
 
 
-            string x;
-            x = Console.ReadLine();
-
-
+            Console.WriteLine("Zadejte první číslo");
+            string x = Console.ReadLine();
+            Console.WriteLine("první číslo: " + x);
+            Console.WriteLine("Zadejte druhé číslo");
+            string y = Console.ReadLine();
+            Console.WriteLine("druhé číslo: " + y);
+            int int_x = 0;
+            int int_y = 0;
+            if(int.TryParse(x, out int_x) && int.TryParse(y, out int_y))
+            {
+                Int32.Parse(x);
+                Int32.Parse(y);
+                int vysledek = 0;
+                Console.WriteLine("zadejte operátor +/-");
+                string operátor = Console.ReadLine();
+                if (operátor == "+")
+                {
+                    vysledek = int_x + int_y;
+                }
+                
+                else if(operátor == "-")
+                {
+                    vysledek = int_x - int_y;
+                }
+                
+                
+                else
+                {
+                    Console.WriteLine("zadejte + nebo -");
+                }
+                Console.WriteLine(vysledek);
+            }
+            else
+            {
+                Console.WriteLine("zadána nečíslená hodnota lol");
+            }
+           
             Console.ReadKey(); //Toto nech jako posledni radek, aby se program neukoncil ihned, ale cekal na stisk klavesy od uzivatele.
         }
     }
