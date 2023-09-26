@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -19,85 +20,111 @@ namespace Calculator
         {
 
 
-            double doubleX = 0.0;
-            double doubleY = 0.0;
-            string x = "";
-            string y = "";
-            string odpoved = "";
-            int pocitadlo = 0;
-            double vysledek = 0.0;
+            List<string> operace = new List<string>();
+
+            List<float> cisla = new List<float>();
+            float vysledek = 0;
+
 
             while (true)
             {
-                string vyssledek = Convert.ToString(vysledek);
-                pocitadlo++;
-                while (true)
+                Console.WriteLine("zadejte příklad");
+                string vypocet = Console.ReadLine();
+                List<string> elementy = vypocet.Split(' ').ToList();
+                List<string> spatne = new List<string>();
+                elementy.Add("_");
+                elementy.Add("0");
+                if (elementy.Count <= 4)
                 {
-                    if (pocitadlo == 1)
-                    {
-                        Console.WriteLine("Zadejte první číslo");
-                        x = Console.ReadLine();
-                    }
-                    else
-                    {
-                        x = vyssledek;
-                    }
-                    Console.WriteLine("první číslo: " + x);
-                    Console.WriteLine("Zadejte druhé číslo");
-                    y = Console.ReadLine();
-                    Console.WriteLine("druhé číslo: " + y);
-                    if (double.TryParse(x, out doubleX) && double.TryParse(y, out doubleY))
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("zadána nečíslená hodnota lol");
-                    }
+                    spatne.Add("a");
 
                 }
-                double.Parse(x);
-                double.Parse(y);
-
-                Console.WriteLine("zadejte operátor");
-                string operátor = Console.ReadLine();
-                switch (operátor)
+                 
+                for (int i = 0; i < elementy.Count - 2; i++)
                 {
+                    if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-"))
+                    {
 
-                    case "+":
-                        vysledek = doubleX + doubleY;
-                        break;
-
-                    case "-":
-                        vysledek = doubleX - doubleY;
-                        break;
-                    case "*":
-                        vysledek = doubleX * doubleY;
-                        break;
-                    case "/":
-                        vysledek = (doubleX / doubleY);
-                        break;
+                        spatne.Add(elementy[i]);
+                    }
                 }
-                Console.WriteLine("vysledek: " + vysledek);
-
-                Console.WriteLine("chcete dále počítat? ano/ne ");
-                odpoved = Console.ReadLine();
-                if (odpoved == "ne")
+                 
+                if (spatne.Count == 0)
                 {
+                    for (int i = 0; i < elementy.Count - 2; i++)
+                    {
+                        if (float.TryParse(elementy[i], out float cislo2))
+                        {
+
+
+                            cislo2 = float.Parse(elementy[i]);
+                            cisla.Add(cislo2);
+
+
+                        }
+                        else if (elementy[i] == "+" || elementy[i] == "-")
+                        {
+                            operace.Add(elementy[i]);
+
+                        }
+
+                    }
                     break;
                 }
+                
+                else
+                {
 
+                    Console.WriteLine("příklad byl zadán špatně");
+                }
+                
 
-
-                Console.ReadKey(); //Toto nech jako posledni radek, aby se program neukoncil ihned, ale cekal na stisk klavesy od uzivatele.
-
+                
+                
             }
+            
+                vysledek = cisla[0];
+                for (int i = 0; i < operace.Count; i++)
+                    switch (operace[i])
+                    {
+                        case "+":
+
+                            vysledek = vysledek + cisla[i + 1];
+
+                            break;
+                        case "-":
+
+                            vysledek = vysledek - cisla[i + 1];
+
+
+                            break;
+                        case "_":
+
+                            break;
+
+
+
+
+
+
+                    }
+
+                Console.WriteLine(vysledek);
+                Console.ReadKey();
+
+
+
+
+
+
+
+
+
+
+
+
 
             
-
-            
-           
-           
         }
     }
 }
