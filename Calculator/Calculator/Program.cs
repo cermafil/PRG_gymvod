@@ -19,112 +19,89 @@ namespace Calculator
         static void Main(string[] args)
         {
 
-
             List<string> operace = new List<string>();
-
             List<float> cisla = new List<float>();
             float vysledek = 0;
-
-
+            
             while (true)
             {
-                Console.WriteLine("zadejte příklad");
+                Console.WriteLine("zadejte příklad ve tvaru: 1 + 2 - 3 ...");
                 string vypocet = Console.ReadLine();
                 List<string> elementy = vypocet.Split(' ').ToList();
                 List<string> spatne = new List<string>();
+
                 elementy.Add("_");
                 elementy.Add("0");
+
                 if (elementy.Count <= 4)
                 {
                     spatne.Add("a");
-
                 }
-                 
                 for (int i = 0; i < elementy.Count - 2; i++)
                 {
                     if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-"))
                     {
-
                         spatne.Add(elementy[i]);
                     }
                 }
-                 
+                for (int j = 0; j < elementy.Count - 2; j+= 2)
+                {
+                    
+                    if (! (float.TryParse(elementy[j], out float cislo1)))
+                    {
+                        
+                        spatne.Add(elementy[j]);
+                    }
+                }
+                for (int k = 1; k < elementy.Count - 2; k += 2)
+                {
+                    if (!((elementy[k] == "+" || elementy[k] == "-")))
+                    {
+                        spatne.Add(elementy[k]);
+                    }
+                }
                 if (spatne.Count == 0)
                 {
                     for (int i = 0; i < elementy.Count - 2; i++)
                     {
                         if (float.TryParse(elementy[i], out float cislo2))
                         {
-
-
                             cislo2 = float.Parse(elementy[i]);
                             cisla.Add(cislo2);
-
-
                         }
                         else if (elementy[i] == "+" || elementy[i] == "-")
                         {
                             operace.Add(elementy[i]);
-
                         }
-
                     }
                     break;
                 }
-                
                 else
                 {
-
                     Console.WriteLine("příklad byl zadán špatně");
                 }
                 
-
-                
-                
             }
-            
                 vysledek = cisla[0];
+
                 for (int i = 0; i < operace.Count; i++)
                     switch (operace[i])
                     {
                         case "+":
 
                             vysledek = vysledek + cisla[i + 1];
-
                             break;
+
                         case "-":
 
                             vysledek = vysledek - cisla[i + 1];
-
-
                             break;
                         case "_":
 
                             break;
-
-
-
-
-
-
-                    }
-
+                    } 
                 Console.WriteLine(vysledek);
                 Console.ReadKey();
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
         }
     }
 }
