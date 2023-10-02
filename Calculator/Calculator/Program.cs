@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Kalkulačka
 {
     internal class Program
     {
+        private static float vysledek = 0;
         static void Main(string[] args)
         {
             while (true)
@@ -21,6 +23,7 @@ namespace Kalkulačka
                 Console.WriteLine("Vyberte kalkulačku:");
                 Console.WriteLine("1. Jednoduchá kalkulačka");
                 Console.WriteLine("2. Kalkulačka pro výrazy");
+                Console.WriteLine("3. převaděč do binární soustavy");
                 
                 string volba = Console.ReadLine();
 
@@ -34,42 +37,102 @@ namespace Kalkulačka
                         KalkulackaProVyrazy();
                         break;
 
-                    
-
+                    case "3":
+                        binarni();
+                        break;
                     default:
                         Console.WriteLine("špatně zadaný input");
                         break;
                 }
             }
         }
+        static void binarni()
+        {
+            Console.WriteLine("Vyberte kalkulačku:");
+            Console.WriteLine("1. Decimální soustava --> Binární soustava");
+            Console.WriteLine("2. Binární soustava --> Decimální soustava");
 
+            string volba = Console.ReadLine();
+            List<string> zbytky = new List<string>();
+            
+
+            switch (volba)
+            {
+                case "1":
+                    Console.WriteLine("Zadejte celé číslo");
+                    while (true)
+                    {
+                         
+                        string input = Console.ReadLine();
+                        if (int.TryParse(input, out int cislo))
+                        {
+                            cislo = int.Parse(input);
+                             
+                            while (cislo > 0)
+                            {
+                                if (cislo % 2 == 0)
+                                {
+                                    zbytky.Add("0");
+                                     
+                                }
+                                else
+                                {
+                                    zbytky.Add("1");
+                                     
+                                }                
+                                cislo = cislo / 2;
+                                
+                            }
+                            zbytky.Reverse();
+                            Console.WriteLine("výsledek je: " + String.Join("", zbytky));
+                            break;
+                        }
+                        
+                    }
+                    break;
+
+                case "2":
+                    
+                    break;
+
+                default:
+                    Console.WriteLine("špatně zadaný input");
+                    break;
+            }
+        }
         static void JednoduchaKalkulacka()
         {
-            double doubleX = 0.0;
-            double doubleY = 0.0;
-            string x = "";
-            string y = "";
+            float cislo1 = 0;
+            float cislo2 = 0;
+            string input1;
+            string input2;
             string odpoved = "";
-            double vysledek = 0.0;
+            
 
             while (true)
             {
                 while (true)
                 {
                     Console.WriteLine("Zadejte první číslo:");
-                    x = Console.ReadLine();
+                    input1 = Console.ReadLine();
                      
                     Console.WriteLine("Zadejte druhé číslo:");
-                    y = Console.ReadLine();
-                     
+                    input2 = Console.ReadLine();
 
-                    if (double.TryParse(x, out doubleX) && double.TryParse(y, out doubleY))
+
+                    if (float.TryParse(input1, out cislo1) && float.TryParse(input2, out cislo2))
                     {
                         break;
                     }
-                    else if (x == "ans" || y == "ans")
+                    else if (input1 == "ans")
                     {
-
+                        cislo1 = vysledek;
+                        break;
+                    }
+                    else if (input2 == "ans")
+                    {
+                        cislo2 = vysledek;
+                        break;
                     }
                     else
                     {
@@ -83,17 +146,17 @@ namespace Kalkulačka
                 switch (operatorSymbol)
                 {
                     case "+":
-                        vysledek = doubleX + doubleY;
+                        vysledek = cislo1 + cislo2;
                         break;
 
                     case "-":
-                        vysledek = doubleX - doubleY;
+                        vysledek = cislo1 - cislo2;
                         break;
                     case "*":
-                        vysledek = doubleX * doubleY;
+                        vysledek = cislo1 * cislo2;
                         break;
                     case "/":
-                        vysledek = (doubleX / doubleY);
+                        vysledek = (cislo1 / cislo2);
                         break;
                 }
 
@@ -112,7 +175,6 @@ namespace Kalkulačka
         {
             List<string> operace = new List<string>();
             List<float> cisla = new List<float>();
-            float vysledek = 0;
 
             while (true)
             {
@@ -141,12 +203,11 @@ namespace Kalkulačka
 
             Vypocet();
 
-            // Funkce pro kalkulačku pro výrazy
             void Zkontrolovat(List<string> elementy, List<string> spatne)
             {
                 for (int i = 0; i < elementy.Count; i++)
                 {
-                    if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-"))
+                    if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-" || elementy[i] == "*" || elementy[i] == "/" || elementy[i] == "ans"))
                     {
                         spatne.Add(elementy[i]);
                     }
@@ -154,7 +215,7 @@ namespace Kalkulačka
 
                 for (int j = 0; j < elementy.Count; j += 2)
                 {
-                    if (!(float.TryParse(elementy[j], out float cislo1)))
+                    if (!(float.TryParse(elementy[j], out float cislo1) || elementy[j] == "ans"))
                     {
                         spatne.Add(elementy[j]);
                     }
@@ -162,7 +223,7 @@ namespace Kalkulačka
 
                 for (int k = 1; k < elementy.Count; k += 2)
                 {
-                    if (!((elementy[k] == "+" || elementy[k] == "-")))
+                    if (!((elementy[k] == "+" || elementy[k] == "-" || elementy[k] == "*" || elementy[k] == "/" || elementy[k] == "ans")))
                     {
                         spatne.Add(elementy[k]);
                     }
@@ -173,12 +234,19 @@ namespace Kalkulačka
             {
                 for (int i = 0; i < elementy.Count; i++)
                 {
-                    if (float.TryParse(elementy[i], out float cislo2))
+                    if (float.TryParse(elementy[i], out float cislo2) || elementy[i] == "ans")
                     {
-                        cislo2 = float.Parse(elementy[i]);
-                        cisla.Add(cislo2);
+                        if (elementy[i] == "ans")
+                        {
+                            cisla.Add(vysledek); 
+                        }
+                        else
+                        {
+                            cislo2 = float.Parse(elementy[i]);
+                            cisla.Add(cislo2);
+                        }
                     }
-                    else if (elementy[i] == "+" || elementy[i] == "-")
+                    else if (elementy[i] == "+" || elementy[i] == "-" || elementy[i] == "*" || elementy[i] == "/")
                     {
                         operace.Add(elementy[i]);
                     }
@@ -187,8 +255,20 @@ namespace Kalkulačka
 
             void Vypocet()
             {
+                for (int i = 0; i < operace.Count; i++)
+                {
+                    if (operace[i] == "*")
+                    {
+                        cisla[i] = cisla[i] * cisla[i + 1];
+                        cisla[i + 1] = 0;
+                    }
+                    else if (operace[i] == "/")
+                    {
+                        cisla[i] = cisla[i] / cisla[i + 1];
+                        cisla[i + 1] = 0;
+                    }
+                }
                 vysledek = cisla[0];
-
                 for (int i = 0; i < operace.Count; i++)
                 {
                     switch (operace[i])
@@ -207,6 +287,11 @@ namespace Kalkulačka
                 Console.ReadKey();
             }
         }
-    }
-}
+
+
+         
+            }
+        }
+    
+
 
