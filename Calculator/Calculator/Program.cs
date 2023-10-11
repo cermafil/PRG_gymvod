@@ -53,38 +53,19 @@ namespace Kalkulačka
             Console.WriteLine("2. Binární soustava --> Decimální soustava");
 
             string volba = Console.ReadLine();
-            List<string> zbytky = new List<string>();
-            
 
             switch (volba)
             {
                 case "1":
-                    Console.WriteLine("Zadejte celé číslo");
                     while (true)
                     {
-                         
+                       
+                        Console.WriteLine("Zadejte celé číslo:");
                         string input = Console.ReadLine();
-                        if (int.TryParse(input, out int cislo))
-                        {
-                            cislo = int.Parse(input);
-                             
-                            while (cislo > 0)
+                        if (JeValidní(input))
                             {
-                                if (cislo % 2 == 0)
-                                {
-                                    zbytky.Add("0");
-                                     
-                                }
-                                else
-                                {
-                                    zbytky.Add("1");
-                                     
-                                }                
-                                cislo = cislo / 2;
-                                
-                            }
-                            zbytky.Reverse();
-                            Console.WriteLine("výsledek je: " + String.Join("", zbytky));
+                            int cislo = int.Parse(input);
+                            DecimálníNaBinární(cislo);
                             break;
                         }
                         
@@ -92,12 +73,96 @@ namespace Kalkulačka
                     break;
 
                 case "2":
-                    
+                    BinárníNaDesitkovou();
                     break;
 
                 default:
-                    Console.WriteLine("špatně zadaný input");
+                    Console.WriteLine("Špatně zadaný vstup.");
                     break;
+            }
+        }
+        static bool JeValidní(string input)
+        {
+            if (int.TryParse(input, out int cislo))
+            {
+                return true;
+            }
+            else
+            {
+                
+                foreach (char c in input)
+                {
+                    if (c != '0' && c != '1')
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+
+        static void DecimálníNaBinární(int cislo)
+        {
+           
+            List<string> zbytky = new List<string>();
+
+            while (cislo > 0)
+            {
+                if (cislo % 2 == 0)
+                {
+                    zbytky.Add("0");
+                }
+                else
+                {
+                    zbytky.Add("1");
+                }
+            cislo = cislo / 2;
+            }
+                    zbytky.Reverse();
+        Console.WriteLine("Výsledek je: " + string.Join("", zbytky));
+                    
+                
+            
+        }
+
+        static void BinárníNaDesitkovou()
+        {
+            Console.WriteLine("Zadejte binární číslo:");
+            while (true)
+            {
+                string input = Console.ReadLine();
+                int cislo = 0;
+                int pozice = 0;
+                bool jePlatny = true;
+
+                foreach (char c in input)
+                {
+                    if (c != '0' && c != '1')
+                    {
+                        jePlatny = false;
+                        break;
+                    }
+                }
+
+                if (jePlatny)
+                {
+                    for (int i = input.Length - 1; i >= 0; i--)
+                    {
+                        if (input[i] == '1')
+                        {
+                            cislo += (int)Math.Pow(2, pozice);
+                        }
+                        pozice++;
+                    }
+
+                    Console.WriteLine("Výsledek je: " + cislo);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Neplatný binární vstup. Zadejte pouze 0 a 1.");
+                }
             }
         }
         static void JednoduchaKalkulacka()
