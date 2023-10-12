@@ -20,14 +20,15 @@ namespace Kalkulačka
         {
             while (true)
             {
+
                 Console.WriteLine("Vyberte kalkulačku:");
                 Console.WriteLine("1. Jednoduchá kalkulačka");
                 Console.WriteLine("2. Kalkulačka pro výrazy");
                 Console.WriteLine("3. převaděč do binární soustavy");
                 Console.WriteLine("4. faktoriál a fibonacciho posloupnost");
-                
+
                 string volba = Console.ReadLine();
-                
+
                 switch (volba)
                 {
                     case "1":
@@ -50,6 +51,7 @@ namespace Kalkulačka
                 }
             }
         }
+        //vypočítá faktoriál a fibonacciho posloupnost pomocí rekurze
         static void FactorFibonaci()
         {
             while (true)
@@ -69,8 +71,8 @@ namespace Kalkulačka
                 {
                     Console.WriteLine("špatně zadaný input");
                 }
-            }   
-                
+            }
+
         }
 
         static int Factorial(int n)
@@ -101,7 +103,7 @@ namespace Kalkulačka
             return factorial1 + factorial2;
 
         }
-    
+
 
         static void binarni()
         {
@@ -116,16 +118,16 @@ namespace Kalkulačka
                 case "1":
                     while (true)
                     {
-                       
+
                         Console.WriteLine("Zadejte celé číslo:");
                         string input = Console.ReadLine();
                         if (JeValidní(input))
-                            {
+                        {
                             int cislo = int.Parse(input);
                             DecimálníNaBinární(cislo);
                             break;
                         }
-                        
+
                     }
                     break;
 
@@ -150,6 +152,7 @@ namespace Kalkulačka
                     break;
             }
         }
+        //zjistí jestli je input platný int a nebo je pouze jedničky a nuly(binární)
         static bool JeValidní(string input)
         {
             if (int.TryParse(input, out int cislo))
@@ -158,7 +161,7 @@ namespace Kalkulačka
             }
             else
             {
-                
+
                 foreach (char c in input)
                 {
                     if (c != '0' && c != '1')
@@ -170,10 +173,9 @@ namespace Kalkulačka
             }
         }
 
-
+        //dělí decimální číslo 2 dokud nedojde k nule a zaznamenává, jestli je číslo zrovna dělitelné 2 pokud ano zaznamená 1 pokud ne 0  
         static void DecimálníNaBinární(int cislo)
         {
-           
             List<string> zbytky = new List<string>();
 
             while (cislo > 0)
@@ -186,29 +188,29 @@ namespace Kalkulačka
                 {
                     zbytky.Add("1");
                 }
-            cislo = cislo / 2;
+                cislo = cislo / 2;
             }
-                    zbytky.Reverse();
-        Console.WriteLine("Výsledek je: " + string.Join("", zbytky));
-          
-        }
+            zbytky.Reverse();
+            Console.WriteLine("Výsledek je: " + string.Join("", zbytky));
 
+        }
+        //podle pozice 1 umocní 2 a přičte k výsledku 
         static void BinárníNaDesitkovou(string binary)
         {
-            if (JeValidní(binary)) // Reusing JeValidní for binary validation
+            if (JeValidní(binary))
             {
                 int decimalResult = 0;
                 int binaryLength = binary.Length;
 
                 for (int i = 0; i < binaryLength; i++)
                 {
-                    int bit = binary[binaryLength - i - 1] - '0'; // Convert char to int (0 or 1)
+                    int bit = binary[binaryLength - i - 1] - '0';
                     decimalResult += bit * (int)Math.Pow(2, i);
                 }
 
                 Console.WriteLine("Výsledek v decimální soustavě: " + decimalResult);
             }
-             
+
         }
 
         static void JednoduchaKalkulacka()
@@ -218,7 +220,7 @@ namespace Kalkulačka
             string input1;
             string input2;
             string odpoved = "";
-            
+
 
             while (true)
             {
@@ -226,7 +228,7 @@ namespace Kalkulačka
                 {
                     Console.WriteLine("Zadejte první číslo nebo ans:");
                     input1 = Console.ReadLine();
-                     
+
                     Console.WriteLine("Zadejte druhé číslo nebo ans:");
                     input2 = Console.ReadLine();
 
@@ -278,7 +280,7 @@ namespace Kalkulačka
                 {
                     break;
                 }
-                
+
             }
         }
 
@@ -289,7 +291,7 @@ namespace Kalkulačka
 
             while (true)
             {
-                Console.WriteLine("Zadejte příklad např. 1 + 2 - 3 ...");
+                Console.WriteLine("Zadejte příklad např. 1 + 2 - 3 ...(přesnost výpočtu není zaručena)");
                 string vypocet = Console.ReadLine();
                 List<string> elementy = vypocet.Split(' ').ToList();
                 List<string> spatne = new List<string>();
@@ -313,12 +315,12 @@ namespace Kalkulačka
             }
 
             Vypocet();
-
+            //zkontoluje, jestli input vyhovuje vzoru --> jestli se v něm střídají pouze čísla a operátory
             void Zkontrolovat(List<string> elementy, List<string> spatne)
             {
                 for (int i = 0; i < elementy.Count; i++)
                 {
-                    if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-" || elementy[i] == "*" || elementy[i] == "/" || elementy[i] == "ans"))
+                    if (!(float.TryParse(elementy[i], out float cislo1) || elementy[i] == "+" || elementy[i] == "-" || elementy[i] == "*" || elementy[i] == "/"))
                     {
                         spatne.Add(elementy[i]);
                     }
@@ -326,7 +328,7 @@ namespace Kalkulačka
 
                 for (int j = 0; j < elementy.Count; j += 2)
                 {
-                    if (!(float.TryParse(elementy[j], out float cislo1) || elementy[j] == "ans"))
+                    if (!(float.TryParse(elementy[j], out float cislo1)))
                     {
                         spatne.Add(elementy[j]);
                     }
@@ -334,28 +336,23 @@ namespace Kalkulačka
 
                 for (int k = 1; k < elementy.Count; k += 2)
                 {
-                    if (!((elementy[k] == "+" || elementy[k] == "-" || elementy[k] == "*" || elementy[k] == "/" || elementy[k] == "ans")))
+                    if (!((elementy[k] == "+" || elementy[k] == "-" || elementy[k] == "*" || elementy[k] == "/")))
                     {
                         spatne.Add(elementy[k]);
                     }
                 }
             }
-
+            //rozdělí čísla a operátory do jejich listů
             void ZiskatCislaZnaky(List<string> elementy)
             {
                 for (int i = 0; i < elementy.Count; i++)
                 {
-                    if (float.TryParse(elementy[i], out float cislo2) || elementy[i] == "ans")
+                    if (float.TryParse(elementy[i], out float cislo2))
                     {
-                        if (elementy[i] == "ans")
-                        {
-                            cisla.Add(vysledek); 
-                        }
-                        else
-                        {
-                            cislo2 = float.Parse(elementy[i]);
-                            cisla.Add(cislo2);
-                        }
+
+                        cislo2 = float.Parse(elementy[i]);
+                        cisla.Add(cislo2);
+
                     }
                     else if (elementy[i] == "+" || elementy[i] == "-" || elementy[i] == "*" || elementy[i] == "/")
                     {
@@ -363,7 +360,7 @@ namespace Kalkulačka
                     }
                 }
             }
-
+            //správně vypočítá příklad zadaný ve tvaru 5 + 1 * 3 - 2 / 2 ...
             void Vypocet()
             {
                 for (int i = 0; i < operace.Count; i++)
@@ -397,12 +394,11 @@ namespace Kalkulačka
                 Console.WriteLine("Výsledek: " + vysledek);
                 Console.ReadKey();
             }
+
+
+
         }
-
-
-         
     }
 }
-    
 
 
