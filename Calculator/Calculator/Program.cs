@@ -24,9 +24,10 @@ namespace Kalkulačka
                 Console.WriteLine("1. Jednoduchá kalkulačka");
                 Console.WriteLine("2. Kalkulačka pro výrazy");
                 Console.WriteLine("3. převaděč do binární soustavy");
+                Console.WriteLine("4. faktoriál a fibonacciho posloupnost");
                 
                 string volba = Console.ReadLine();
-
+                
                 switch (volba)
                 {
                     case "1":
@@ -40,12 +41,68 @@ namespace Kalkulačka
                     case "3":
                         binarni();
                         break;
+                    case "4":
+                        FactorFibonaci();
+                        break;
                     default:
                         Console.WriteLine("špatně zadaný input");
                         break;
                 }
             }
         }
+        static void FactorFibonaci()
+        {
+            while (true)
+            {
+                Console.WriteLine("zadej platné číslo");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int n))
+                {
+                    int factorial = Factorial(n);
+                    int fibonacci = Fibonacci(n);
+
+                    Console.WriteLine($"Pro cislo {n} je faktorial {factorial} a {n}. prvek Fibonacciho posloupnosti je {fibonacci}");
+
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("špatně zadaný input");
+                }
+            }   
+                
+        }
+
+        static int Factorial(int n)
+        {
+            int factorial = n;
+            if (n == 1)
+            {
+
+                return factorial;
+            }
+
+            factorial *= Factorial(n - 1);
+            return factorial;
+        }
+        static int Fibonacci(int n)
+        {
+
+            if (n == 1)
+            {
+                return 1;
+            }
+            else if (n == 0)
+            {
+                return 0;
+            }
+            int factorial1 = Fibonacci(n - 1);
+            int factorial2 = Fibonacci(n - 2);
+            return factorial1 + factorial2;
+
+        }
+    
+
         static void binarni()
         {
             Console.WriteLine("Vyberte kalkulačku:");
@@ -73,7 +130,19 @@ namespace Kalkulačka
                     break;
 
                 case "2":
-                    BinárníNaDesitkovou();
+                    while (true)
+                    {
+
+                        Console.WriteLine("Zadejte binární kód:");
+                        string input = Console.ReadLine();
+                        if (JeValidní(input))
+                        {
+                            int cislo = int.Parse(input);
+                            BinárníNaDesitkovou(input);
+                            break;
+                        }
+
+                    }
                     break;
 
                 default:
@@ -121,50 +190,27 @@ namespace Kalkulačka
             }
                     zbytky.Reverse();
         Console.WriteLine("Výsledek je: " + string.Join("", zbytky));
-                    
-                
-            
+          
         }
 
-        static void BinárníNaDesitkovou()
+        static void BinárníNaDesitkovou(string binary)
         {
-            Console.WriteLine("Zadejte binární číslo:");
-            while (true)
+            if (JeValidní(binary)) // Reusing JeValidní for binary validation
             {
-                string input = Console.ReadLine();
-                int cislo = 0;
-                int pozice = 0;
-                bool jePlatny = true;
+                int decimalResult = 0;
+                int binaryLength = binary.Length;
 
-                foreach (char c in input)
+                for (int i = 0; i < binaryLength; i++)
                 {
-                    if (c != '0' && c != '1')
-                    {
-                        jePlatny = false;
-                        break;
-                    }
+                    int bit = binary[binaryLength - i - 1] - '0'; // Convert char to int (0 or 1)
+                    decimalResult += bit * (int)Math.Pow(2, i);
                 }
 
-                if (jePlatny)
-                {
-                    for (int i = input.Length - 1; i >= 0; i--)
-                    {
-                        if (input[i] == '1')
-                        {
-                            cislo += (int)Math.Pow(2, pozice);
-                        }
-                        pozice++;
-                    }
-
-                    Console.WriteLine("Výsledek je: " + cislo);
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Neplatný binární vstup. Zadejte pouze 0 a 1.");
-                }
+                Console.WriteLine("Výsledek v decimální soustavě: " + decimalResult);
             }
+             
         }
+
         static void JednoduchaKalkulacka()
         {
             float cislo1 = 0;
@@ -178,10 +224,10 @@ namespace Kalkulačka
             {
                 while (true)
                 {
-                    Console.WriteLine("Zadejte první číslo:");
+                    Console.WriteLine("Zadejte první číslo nebo ans:");
                     input1 = Console.ReadLine();
                      
-                    Console.WriteLine("Zadejte druhé číslo:");
+                    Console.WriteLine("Zadejte druhé číslo nebo ans:");
                     input2 = Console.ReadLine();
 
 
@@ -355,8 +401,8 @@ namespace Kalkulačka
 
 
          
-            }
-        }
+    }
+}
     
 
 
