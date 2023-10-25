@@ -96,7 +96,7 @@ namespace ArrayPlayground
             for(int i = 0; i < rand.Length; i++) 
             {
                 int j = rand[i]; 
-                counts[j] += 1; 
+                counts[j]++; 
                 
 
             }
