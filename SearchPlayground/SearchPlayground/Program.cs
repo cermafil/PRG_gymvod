@@ -40,18 +40,24 @@ namespace SearchPlayground
              * Až ti bude binary search fungovat, přidej k němu proměnnou, která ti bude počítat, kolikrát jsi musel rozdělit interval, než jsi prvek našel
              * a před returnem ho vypiš uživateli do konzole.
              */
+            int count = 0;
             int l = 0;
             int u = 0;
             int m = 0;
             u = array.Length - 1;
             while (true)
             {
-                
+                count++;
                 m = (u + l) / 2;
                  
                 if (elementToSearch == array[m])
-                { 
+                {
+                    Console.WriteLine(count);
                     return m; 
+                }
+                else if(elementToSearch == array[u])
+                {
+                    return u;
                 }
                 else if(elementToSearch < array[m])
                 {
@@ -63,15 +69,13 @@ namespace SearchPlayground
                 }
                 else { break; }
             }
-
+           
             return -1;
         }
 
-        static int BinarySearchRecursive(int[] array, int elementToSearch, int lower, int upper)
+        static int BinarySearchRecursive(int[] array, int elementToSearch, int l, int u)
         {
-            int l = 0;
-             
-            int u = array.Length - 1;
+            
             
             
                 int m = (u + l) / 2;
@@ -82,17 +86,16 @@ namespace SearchPlayground
                 else if (elementToSearch < array[m])
                 {
                      
-                    return BinarySearchRecursive(array, elementToSearch, l, m);
+                    return BinarySearchRecursive(array, elementToSearch, l, m - 1);
 
                 }
                 else if (elementToSearch > array[m])
                 {
                      
-                    return BinarySearchRecursive(array, elementToSearch, m, u);
+                    return BinarySearchRecursive(array, elementToSearch, m + 1, u);
                 }
-            return m;
-            
-            
+            return -1;
+
         }
 
         //Naplní pole náhodnými rostoucími čísly.
