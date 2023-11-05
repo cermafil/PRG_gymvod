@@ -77,7 +77,7 @@ namespace SearchPlayground
                 int m = (u + l) / 2;
                 if (elementToSearch == array[m])
                 {
-                    return m;
+                    return m+1;
                 }
                 else if (elementToSearch < array[m])
                 {
@@ -90,7 +90,7 @@ namespace SearchPlayground
                      
                     return BinarySearchRecursive(array, elementToSearch, m, u);
                 }
-            return m;
+            return -1;
             
             
         }
