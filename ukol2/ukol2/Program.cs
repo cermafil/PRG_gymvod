@@ -28,7 +28,6 @@ namespace ukol2
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
-
                     count++;
                     array[i, j] = count;
                 }
@@ -70,7 +69,10 @@ namespace ukol2
                 Console.WriteLine("5. column switcheroo");
                 Console.WriteLine("6. diagonal uno reverse");
                 Console.WriteLine("7. Second Diagonal Uno Reverse");
-                
+                Console.WriteLine("8. multiply every eleeeement");
+                Console.WriteLine("9. add or substract");
+                Console.WriteLine("10. transpose");
+                Console.WriteLine("11. multipla");
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -96,6 +98,18 @@ namespace ukol2
                         break;
                     case "7":
                         Print2DArray(SecondDiagonalUnoReverse(array));
+                        break;
+                    case "8":
+                        Print2DArray(ElementMultiplication(array));
+                        break;
+                    case "9":
+                        Print2DArray(AddSubstract(array));
+                        break;
+                    case "10":
+                        Print2DArray(TrasposeIt(array));
+                        break;
+                    case "11":
+                        Print2DArray(Multiply(array));
                         break;
                     default:
                         Console.WriteLine("wrong input");
@@ -253,15 +267,85 @@ namespace ukol2
 
             return array;
         }
-        
+        static int[,] ElementMultiplication(int[,] array)
+        {
+            int multiplier = GetElement();
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    array[i, j] *= multiplier; 
+                }
+            }
+            return array;
+        }
+        static int[,] AddSubstract(int[,] array)
+        {
+            int[,] array2 = array;
+            while (true)
+            {
+                Console.WriteLine("choose + or - or get stuck in a loop forever writing anything else...");
+                string input = Console.ReadLine();
+                if (input == "+")
+                {
+                    for (int i = 0; i < array.GetLength(0); i++)
+                    {
 
+                        for (int j = 0; j < array.GetLength(1); j++)
+                        {
+                            array[i, j] = array[i,j] + array2[i, j];
+                        }
+                    }
+                    break;
+                }
+                else if (input == "-")
+                {
+                    for (int i = 0; i < array.GetLength(0); i++)
+                    {
 
+                        for (int j = 0; j < array.GetLength(1); j++)
+                        {
+                            array[i, j] = array[i, j] - array2[i, j];
+                        }
+                    }
+                    break;
+                }
+            }
+            return array;
+        }
+        static int[,] TrasposeIt(int[,] array)
+        {
+            int [,] transArray = new int[array.GetLength(1), array.GetLength(0)];
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    transArray[j, i] = array[i, j];
+                }
+            }
+            return transArray;
+        }
+        static int[,] Multiply(int[,] array)
+        {
+            int[,] array2 = MakeArray(array.GetLength(1), 5);
+            int[,] resultArray = new int[array.GetLength(0), array2.GetLength(1)];
 
-
-
-
+            for (int i = 0; i < resultArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < resultArray.GetLength(1); j++)
+                {
+                    
+                    for (int k = 0; k < array.GetLength(1); k++)
+                    {
+                        resultArray[i, j] += array[i, k] * array2[k, j];
+                    }
+                }
+            }
+            return resultArray;
+        }
     }
+}
 
-    }
+
 
 
