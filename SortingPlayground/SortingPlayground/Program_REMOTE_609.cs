@@ -17,38 +17,6 @@ namespace SortingPlayground
 
         static int[] BubbleSort(int[] array)
         {
-<<<<<<< HEAD
-            int[] sortedArray = (int[])array.Clone(); // Make a copy of the input array
-            bool swapped = true;
-
-            while (swapped)
-            {
-                swapped = false; // Assume no swaps are needed
-
-                for (int i = 0; i < sortedArray.Length - 1; i++)
-                {
-                    if (sortedArray[i] > sortedArray[i + 1])
-                    {
-                        int temp = sortedArray[i];
-                        sortedArray[i] = sortedArray[i + 1];
-                        sortedArray[i + 1] = temp;
-
-                        swapped = true; // Set to true if a swap occurred
-                    }
-                }
-
-            }  // Continue until no more swaps are needed
-
-            return sortedArray;
-        }
-
-        static int[] SelectionSort(int[] array)
-        {
-            int[] sortedArray = (int[])array.Clone(); // Řaď v tomto poli, ve kterém je výchoze zkopírováno všechno ze vstupního pole.
-            /*
-             * TODO: Naimplementuj selection sort.
-             */
-=======
             int[] sortedArray = (int[])array.Clone(); // Řaď v tomto poli, ve kterém je výchoze zkopírováno všechno ze vstupního pole.
             int x = 0;
             int counter =0 ;
@@ -99,18 +67,12 @@ namespace SortingPlayground
                 min = sortedArray[i + 1];
             }
             Array.Reverse(sortedArray);
->>>>>>> 04c48c082b2e0a3f0142e8f78c82708fb51e5a43
             return sortedArray;
         }
 
         static int[] InsertionSort(int[] array)
         {
             int[] sortedArray = (int[])array.Clone(); // Řaď v tomto poli, ve kterém je výchoze zkopírováno všechno ze vstupního pole.
-<<<<<<< HEAD
-            /*
-             * TODO: Naimplementuj insertion sort.
-             */
-=======
             int placeholder = 0;
             for(int i = 1;i < sortedArray.Length ;i++)
             {
@@ -124,7 +86,6 @@ namespace SortingPlayground
                 }
                 sortedArray[j+1] = placeholder;
             }
->>>>>>> 04c48c082b2e0a3f0142e8f78c82708fb51e5a43
             return sortedArray;
         }
 
