@@ -77,35 +77,23 @@ namespace ClassPlayground
 
             Rectangle rekt = new Rectangle(3, 69);
             double area = rekt.CalculateArea();
-            Console.WriteLine(area);
+      
             string verdict = rekt.CalculateAspectRatio();
             
-            Console.WriteLine(verdict);
-
-            Console.WriteLine(rekt.ContainsPoint(2, 11));
-            
-
             BankAccount acc1 = new BankAccount(1, "honza", "yuan", 12);
             BankAccount acc2 = new BankAccount(2, "tobi", "yuan", 2000000);
             BankAccount acc3 = new BankAccount(3, "fíla", "yuan", 500);
-            List<BankAccount> accs = new List<BankAccount>();
-            accs.Add(acc1);
-            accs.Add(acc1);
-            accs.Add(acc3);
+           
+            List<BankAccount> accs = new List<BankAccount>
+            { acc1, acc2, acc3 };
+            
             int number = 2;
             int amount = 1;
-            foreach(BankAccount acc in accs)
-                {
-                if (acc.accountNumber == number)
-                {
-                    Console.WriteLine("aaaaaa");
-                    acc.Transfer(number, amount);
-                }
-            }
-            
-            Console.WriteLine(acc1.Deposit(2));
-            Console.WriteLine(acc1.withdraw(13));
+            acc1.balance += acc1.Transfer(1, acc2);
             Console.WriteLine(acc2.balance);
+            Console.WriteLine(acc1.balance);
+            BankAccount acc4 = new BankAccount("yuan", "david");
+            Console.WriteLine(acc4.accountNumber);
             Console.ReadKey();
         }
     }

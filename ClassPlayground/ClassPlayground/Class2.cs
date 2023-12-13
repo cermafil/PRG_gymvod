@@ -34,6 +34,14 @@ namespace ClassPlayground
             this.currency = currency;
             this.balance = balance;
         }
+        public BankAccount( string currency, string HolderName)
+        {
+            var accountNumber = new Random();
+            this.accountNumber = accountNumber.Next(100000000, 1000000000);
+            this.HolderName = HolderName;
+            this.currency = currency;
+            this.balance = 0;
+        }
         public BankAccount() 
         {
             
@@ -51,12 +59,12 @@ namespace ClassPlayground
             }
             return balance;
         }
-        public int Transfer(int amount, int number)
+        public int Transfer(int amount, BankAccount account)
         {
-
-            BankAccount acc2 = new BankAccount();
-            acc2.balance = acc2.balance + amount;
-            return balance; 
+            int balance2;
+            balance2 =- amount;
+            account.balance += amount;
+            return balance2; 
         }
     }
 }
