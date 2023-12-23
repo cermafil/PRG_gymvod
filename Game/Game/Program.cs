@@ -9,6 +9,7 @@ namespace Roguelike
 {
     internal class Program
     {
+        static bool isMovementInProgress = false;
         static void Main(string[] args)
         {
             string[,] array = BackGround();
@@ -16,6 +17,13 @@ namespace Roguelike
             array[0, 0] = "@";
             PrintArray(array);
             Movement(array);
+            
+
+        }
+        static string[,] Maze()
+        {
+            string[,] array = new string[16, 16];
+            return array;
         }
         static string[,] BackGround()
         {
@@ -30,8 +38,8 @@ namespace Roguelike
                     array16x16[i, j] = ".";
                 }
             }
-
-            // Return the array for further use if needed
+            array16x16[2, 2] = "#";
+            // Return the array for further use 
             return array16x16;
         }
 
@@ -46,49 +54,95 @@ namespace Roguelike
                 Console.WriteLine();
             }
         }
-        static string[,] Movement(string[,] array)
+        static void Movement(string[,] array)
         {
             int positionX = 0;
             int positionY = 0;
+
+            //stolen from chatgpt but I sort of get what it does
+            //creates variable with the smallest possible value of DateTime, just to initialise it
+            DateTime pressTime = DateTime.MinValue;
+            //creates variable cooldown with the value of 50 milliseconds
+            TimeSpan cooldown = TimeSpan.FromMilliseconds(50);
+            
             while (true)
             {
-                // Wait for a key press
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
-                Console.Clear();
-
-                Console.WriteLine(keyInfo.Key);
-                switch (keyInfo.Key)
+             
+                if (Console.KeyAvailable)
                 {
-                    case ConsoleKey.RightArrow:
-                        array[positionX, positionY] = ".";
-                        positionY = Math.Min(positionY + 1, array.GetLength(1) - 1);
-                        array[positionX, positionY] = "@";
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        array[positionX, positionY] = ".";
-                        positionY = Math.Max(positionY - 1, 0);
-                        array[positionX, positionY] = "@";
-                        break;
-                    case ConsoleKey.UpArrow:
-                        array[positionX, positionY] = ".";
-                        positionX = Math.Max(positionX - 1, 0);
-                        array[positionX, positionY] = "@";
-                        break;
-                    case ConsoleKey.DownArrow:
-                        array[positionX, positionY] = ".";
-                        positionX = Math.Min(positionX + 1, array.GetLength(0) - 1);
-                        array[positionX, positionY] = "@";
-                        break;
+                    ConsoleKeyInfo keyInfo = Console.ReadKey();
+                    Console.WriteLine(pressTime);
                     
 
-                    default:
-                        // For keys that are not arrows, do nothing
-                        break;
+                    // Check if enough time(at least 50 milliseconds) has passed since the last key press
+                    if ((DateTime.Now - pressTime) >= cooldown)
+                    {
+                        Console.Clear();
+                        Console.WriteLine(keyInfo.Key);
+                        
+                        // Store the current position for reverting changes if needed
+                        int previousX = positionX;
+                        int previousY = positionY;
+
+                        // Handle movement based on the pressed key
+                        switch (keyInfo.Key)
+                        {
+                            case ConsoleKey.RightArrow:
+                                if (array[positionX, positionY + 1] != "#") 
+                                {
+                                    array[positionX, positionY] = ".";
+                                    positionY++;
+                                    array[positionX, positionY] = "@";
+                                }
+                                break;
+                                
+                            case ConsoleKey.LeftArrow:
+                                if (array[positionX, positionY - 1] != "#")
+                                {
+                                    array[positionX, positionY] = ".";
+                                    positionY--;
+                                    array[positionX, positionY] = "@";
+                                }
+                                break;
+                            case ConsoleKey.UpArrow:
+                                if (array[positionX - 1, positionY] != "#")
+                                {
+                                    array[positionX, positionY] = ".";
+                                    positionX--;
+                                    array[positionX, positionY] = "@";
+                                }
+                                break;
+                            case ConsoleKey.DownArrow:
+                                if (array[positionX + 1, positionY] != "#")
+                                {
+                                    array[positionX, positionY] = ".";
+                                    positionX++;
+                                    array[positionX, positionY] = "@";
+                                }
+                                break;
+
+                            default:
+                                // For keys that are not arrows, does nothing for now
+                                break;
+                        }
+
+                        PrintArray(array);
+
+                        //changes the pressTime variable to current time when the key was pressed
+                        pressTime = DateTime.Now;
+                    }
                 }
-                Thread.Sleep(10);
-                PrintArray(array);
             }
-            return array;
         }
     }
 }
+/*
+ *################
+ *#              #
+ *#              #
+ *#              #
+ *#              #
+ *#              #
+ *#              #
+ *################
+ */
