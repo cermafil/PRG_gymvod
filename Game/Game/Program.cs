@@ -12,13 +12,13 @@ namespace Game
         
         static void Main(string[] args)
         {
-            Background background1 = new Background(1);
-            int a = background1.DoorPosition;
+            Background background1 = new Background(0, 4);
+            int a = background1.NextDoorPosition;
             string[,] array = background1.Array;
             array[1, 1] = "@";
             Background.PrintArray(array);
-            PlayerMovement.Movement(background1);
-             // Example: Create a background with a door on the left wall (3)
+            PlayerMovement.Movement(background1, 1, 1);
+            
             
 
         }

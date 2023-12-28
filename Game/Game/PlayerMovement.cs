@@ -19,17 +19,20 @@ namespace Game
             positionY = startY;
 
         }
-        public static void Movement(Background background)
+        public static int i = 0;
+        public static Background start = new Background(0, 4);
+        public static List<Background> map = Background.MakeMap(start);
+        public static void Movement(Background background, int positionX, int positionY)
         {
-            int positionX = 1;
-            int positionY = 1;
+            
             string[,] array = background.Array;
             //stolen from chatgpt but I sort of get what it does
             //creates variable with the smallest possible value of DateTime, just to initialise it
             DateTime pressTime = DateTime.MinValue;
             //creates variable cooldown with the value of 50 milliseconds
             TimeSpan cooldown = TimeSpan.FromMilliseconds(50);
-            List<Background> map = Background.MakeMap(background);
+            
+            
             while (true)
             {
 
@@ -43,12 +46,95 @@ namespace Game
                     if ((DateTime.Now - pressTime) >= cooldown)
                     {
                         Console.Clear();
-                        Console.WriteLine(keyInfo.Key);
-
+                        
+                        
                         // Store the current position for reverting changes if needed
                         int previousX = positionX;
                         int previousY = positionY;
+                        if (positionY == array.GetLength(1) - 1 || positionY == 0 || positionX == array.GetLength(0) - 1 || positionX == 0)
+                        {
+                            
 
+                            if (positionY == array.GetLength(1) - 1 && map[i].NextDoorPosition == 4)
+                            {
+                                
+                                i++;
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) / 2;
+                                positionY = 1;
+                                map[i].Array[map[i].Array.GetLength(0) / 2, 0] = ".";
+                                Movement(map[i], positionX, positionY);
+
+                            }
+
+                            else if (positionY == array.GetLength(1) - 1 && map[i].BackDoorPosition == 4)
+                            {
+                                i--;
+
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) / 2;
+                                positionY = 1;
+                                map[i].Array[map[i].Array.GetLength(0) / 2, 0] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if (positionY == 0 && map[i].NextDoorPosition == 3)
+                            {
+                                i++;
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) / 2;
+                                positionY = map[i].Array.GetLength(1) - 2;
+                                map[i].Array[map[i].Array.GetLength(0) / 2, map[i].Array.GetLength(1) - 1] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if(positionY == 0 && map[i].BackDoorPosition == 3)
+                            {
+                                i--;
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) / 2;
+                                positionY = map[i].Array.GetLength(1) - 2;
+                                map[i].Array[map[i].Array.GetLength(0) / 2, map[i].Array.GetLength(1) - 1] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if (positionX == 0 && map[i].NextDoorPosition == 1)
+                            {
+                                
+                                i++;
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) - 2;
+                                positionY = map[i].Array.GetLength(1) /2;
+                                map[i].Array[map[i].Array.GetLength(0) - 1, map[i].Array.GetLength(1) / 2] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if (positionX == 0 && map[i].BackDoorPosition == 1)
+                            {
+
+                                i--;
+                                Console.WriteLine(i);
+                                positionX = map[i].Array.GetLength(0) - 2;
+                                positionY = map[i].Array.GetLength(1) / 2;
+                                map[i].Array[map[i].Array.GetLength(0) - 1, map[i].Array.GetLength(1) / 2] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if (positionX == array.GetLength(0) - 1 && map[i].NextDoorPosition == 2)
+                            {
+                                i++;
+                                Console.WriteLine(i);
+                                positionX = 1;
+                                positionY = map[i].Array.GetLength(1) / 2;
+                                map[i].Array[0, map[i].Array.GetLength(1) / 2] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            else if (positionX == array.GetLength(0) - 1 && map[i].BackDoorPosition == 2)
+                            {
+                                i--;
+                                Console.WriteLine(i);
+                                positionX = 1;
+                                positionY = map[i].Array.GetLength(1) / 2;
+                                map[i].Array[0, map[i].Array.GetLength(1) / 2] = ".";
+                                Movement(map[i], positionX, positionY);
+                            }
+                            
+                        }
                         // Handle movement based on the pressed key
                         switch (keyInfo.Key)
                         {
@@ -89,6 +175,7 @@ namespace Game
                             default:
                                 // For keys that are not arrows, does nothing for now
                                 break;
+
                         }
 
                         Background.PrintArray(array);
@@ -97,13 +184,7 @@ namespace Game
                         pressTime = DateTime.Now;
                     }
                 }
-                if (positionY == array.GetLength(1) - 1 || positionY == 0 || positionX == array.GetLength(0) - 1 || positionX == 0)
-                {
-                    
-                    Movement(map[1]);
-                    Console.ReadKey();
-                    break;
-                }
+                
             }
         }
     }
