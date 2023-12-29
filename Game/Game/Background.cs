@@ -14,7 +14,7 @@ namespace Game
         public int NextDoorPosition;
         public string[,] Array;
 
-        private static Random random = new Random();
+        public static Random random = new Random();
 
         public Background(int backDoorPosition, int nextDoorPosition)
         {
@@ -105,6 +105,8 @@ namespace Game
                 Console.WriteLine();
             }
         }
+        
+
         public static List<Background> MakeMap(Background start)
         {
             
@@ -114,43 +116,74 @@ namespace Game
             
             for (int i = 0; i < 10; i++)
             {
+                int rand = 0;
                 
                 if (map[i].NextDoorPosition == 1)
                 {
-                    int[] numbers = { 1, 3, 4};
-                    Random random = new Random();
-                    int rand = numbers[random.Next(numbers.Length)];
-                    Console.WriteLine(rand);
+
+                    
+                    while (true)
+                    {
+                        
+                        rand = random.Next(1, 5);
+                        if (rand != 2)
+                        {
+                            break;
+                        }
+                    }
+                     
                     Background background = new Background(2, rand);
                     background.Array[0, 0] = i.ToString();
                     map.Add(background);
                 }
                 else if (map[i].NextDoorPosition == 2)
                 {
-                    int[] numbers = { 2, 3, 4 };
-                    Random random = new Random();
-                    int rand = numbers[random.Next(numbers.Length)];
-                    Console.WriteLine(rand);
+                    
+                    while (true)
+                    {
+                        
+                        rand = random.Next(1, 5);
+                        if (rand != 1)
+                        {
+                            break;
+                        }
+                    }
+                     
                     Background background = new Background(1, rand);
                     background.Array[0, 0] = i.ToString();
                     map.Add(background);
                 }
                 else if (map[i].NextDoorPosition == 3)
                 {
-                    int[] numbers = { 2, 1, 3 };
-                    Random random = new Random();
-                    int rand = numbers[random.Next(numbers.Length)];
-                    Console.WriteLine(rand);
+                    
+                    while (true)
+                    {
+                        
+                        rand = random.Next(1, 5);
+                        if (rand != 4)
+                        {
+                            break;
+                        }
+                    }
+                     
                     Background background = new Background(4, rand);
                     background.Array[0, 0] = i.ToString();
                     map.Add(background);
                 }
                 else if (map[i].NextDoorPosition == 4)
                 {
-                    int[] numbers = { 2, 4, 1 };
-                    Random random = new Random();
-                    int rand = numbers[random.Next(numbers.Length)];
-                    Console.WriteLine(rand);
+                    
+                    while (true)
+                    {
+                        
+                        rand = random.Next(1, 5);
+                        if (rand != 3)
+                        {
+                            break;
+                        }
+                    }
+                    
+                    
                     Background background = new Background(3, rand);
                     background.Array[0, 0] = i.ToString();
                     map.Add(background);

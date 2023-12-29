@@ -20,7 +20,7 @@ namespace Game
 
         }
         public static int i = 0;
-        public static Background start = new Background(0, 4);
+        public static Background start = new Background(0, 1);
         public static List<Background> map = Background.MakeMap(start);
         public static void Movement(Background background, int positionX, int positionY)
         {

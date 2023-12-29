@@ -12,7 +12,7 @@ namespace Game
         
         static void Main(string[] args)
         {
-            Background background1 = new Background(0, 4);
+            Background background1 = new Background(0, 1);
             int a = background1.NextDoorPosition;
             string[,] array = background1.Array;
             array[1, 1] = "@";
