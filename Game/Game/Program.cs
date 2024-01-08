@@ -12,27 +12,16 @@ namespace Game
         
         static void Main(string[] args)
         {
-            Background background1 = new Background(0, 1);
-            int a = background1.NextDoorPosition;
-            string[,] array = background1.Array;
-            array[1, 1] = "@";
-            Background.PrintArray(array);
-            PlayerMovement.Movement(background1, 1, 1);
-            
-            
+            Console.WriteLine("press any key to continue");
+            List<Background> map = PlayerMovement.map;
+            map[0].Array[1, 1] = "@";
+            map[0].Array[0, 0] = "s";
+            Background start = map[0];
 
+           
+            
+            PlayerMovement.Movement(start, 1, 1);
         }
        
-        
     }
 }
-/*
- *################
- *#              #
- *#              #
- *#              #
- *#              #
- *#              #
- *#              #
- *################
- */

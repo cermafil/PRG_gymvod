@@ -13,7 +13,7 @@ namespace Game
         public int BackDoorPosition;
         public int NextDoorPosition;
         public string[,] Array;
-
+        public List<Enemy> enemies = new List<Enemy>();
         public static Random random = new Random();
 
         public Background(int backDoorPosition, int nextDoorPosition)
@@ -56,7 +56,7 @@ namespace Game
             return array;
         }
 
-        private static void MarkDoor(string[,] array, int doorPosition, string doorSymbol)
+        public static void MarkDoor(string[,] array, int doorPosition, string doorSymbol)
         {
             if (doorPosition == 0)
             {
@@ -114,7 +114,7 @@ namespace Game
             start.Array[0, 0] = "s";
             map.Add(start);
             
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 int rand = 0;
                 
