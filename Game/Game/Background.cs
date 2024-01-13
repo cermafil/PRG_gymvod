@@ -15,6 +15,7 @@ namespace Game
         public string[,] Array;
         public List<Enemy> enemies = new List<Enemy>();
         public static Random random = new Random();
+        public int number; 
 
         public Background(int backDoorPosition, int nextDoorPosition)
         {
@@ -25,8 +26,8 @@ namespace Game
 
         public static string[,] MakeBackground(int backDoorPosition, int nextDoorPosition)
         {
-            int width = random.Next(5, 17); // Random width between 2 and 50
-            int height = random.Next(5, 17); // Random height between 2 and 50
+            int width = random.Next(5, 17); 
+            int height = random.Next(5, 17); 
 
             string[,] array = new string[height, width];
 
@@ -47,10 +48,10 @@ namespace Game
             }
             
             
-            // Mark the back door on the specified wall
+            
             MarkDoor(array, backDoorPosition, ".");
 
-            // Mark the next door on the specified wall
+            
             MarkDoor(array, nextDoorPosition, ".");
 
             return array;
@@ -134,6 +135,7 @@ namespace Game
                      
                     Background background = new Background(2, rand);
                     background.Array[0, 0] = i.ToString();
+                    background.number = i;
                     map.Add(background);
                 }
                 else if (map[i].NextDoorPosition == 2)
@@ -188,10 +190,7 @@ namespace Game
                     background.Array[0, 0] = i.ToString();
                     map.Add(background);
                 }
-                
-                
             }
-
             return map;
         }
 
