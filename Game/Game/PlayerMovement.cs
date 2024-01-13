@@ -22,21 +22,22 @@ namespace Game
         public static int lvlThreshold = 5;
         public static int exp = 0;
         public static int dmg = 1;
-        public static List<Background> map = new List<Background>();
+        
         public static string name;
         public static string difficulty;
-        public PlayerMovement(int startX, int startY, List<Background> map, string name)
+
+        public PlayerMovement(int startX, int startY, string name)
         {
             positionX = startX;
             positionY = startY;
-            PlayerMovement.map = map;
+            
             PlayerMovement.name = name;
             
         }
         public static int i = 0;
         public static Background start = new Background(0, 1);
-        
-        public static PlayerMovement player = new PlayerMovement(positionX, positionY, map, name);
+        public static List<Background> map = Background.MakeMap(start);
+        public static PlayerMovement player = new PlayerMovement(positionX, positionY, name);
         
         public static void Movement(Background background, int positionX, int positionY)
         {
@@ -101,7 +102,7 @@ namespace Game
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo keyInfo = Console.ReadKey();
-
+                        
                     // Check if enough time(at least 50 milliseconds) has passed since the last key press
                     if ((DateTime.Now - pressTime) >= cooldown)
                     {

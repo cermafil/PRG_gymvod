@@ -20,11 +20,10 @@ namespace Game
             {
                 difficulty = "yeenya";
             }
-            Background Start = new Background(0, 1);
-            List<Background> Map = Background.MakeMap(Start);
-            PlayerMovement player = new PlayerMovement(1, 1, Map, name);
-            PlayerMovement.playerHealth = 50;
-
+            Console.WriteLine($"Hello {name}, and welcome to my game called the Rock Stew!!");
+            Console.WriteLine("on your way you will find enemies, kill them by running into them, just like in real life");
+            Console.WriteLine("use numpad to move around");
+            Console.WriteLine("may the odds be ever in your favor and god speed");
             Console.WriteLine("press any key to continue");
             List<Background> map = PlayerMovement.map;
             map[0].Array[1, 1] = "@";
