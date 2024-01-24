@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 /*
  * Made by Jan Borecky for PRG seminar at Gymnazium Voderadska, year 2023-2024.
@@ -68,11 +69,16 @@ namespace DFS
                 Console.WriteLine(currentNode.index);
 
                 
-                pathToTargetNode.Add(currentNode.index);
+                
 
                 if (currentNode.index == targetNodeIndex)
                 {
-                    
+                    pathToTargetNode.Add(currentNode.index);
+                    while (currentNode.parent != null)
+                    {
+                        currentNode = currentNode.parent;
+                        pathToTargetNode.Add(currentNode.index);
+                    }
                     break;
                 }
 
@@ -115,7 +121,7 @@ namespace DFS
             int randomNodeIndex = rng.Next(1, (int)Math.Pow(2, treeDepth));
              
             List<int> path = DepthFirstSearch(binaryTree, randomNodeIndex);
-
+            
             // Print the path to the node
             Console.Write("Path to node " + randomNodeIndex + " goes as follows: ");
             for (int i = path.Count - 1; i >= 0; i--)
