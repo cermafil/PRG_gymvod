@@ -66,11 +66,6 @@ namespace DFS
             while (currentNode != null)
             {
                 
-                Console.WriteLine(currentNode.index);
-
-                
-                
-
                 if (currentNode.index == targetNodeIndex)
                 {
                     pathToTargetNode.Add(currentNode.index);
@@ -107,7 +102,7 @@ namespace DFS
         static void Main(string[] args)
         {
             // Change this variable as you wish, just watch out that deeper trees are not very readable in console
-            int treeDepth = 3;
+            int treeDepth = 5;
             BinaryTree binaryTree = new BinaryTree(treeDepth);
 
 
