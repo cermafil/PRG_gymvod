@@ -58,14 +58,18 @@ namespace WindowsFormsApp1
                     }
                     else if(shenanigans2)
                     {
-                        for(int i = 0; i < 50000; i++)
+                        for(int i = 0; i < 50; i++)
                         {
                             Point point = currentPoint;
-                            
-                            int a = rnd.Next(0, 2000);
-                            int b = rnd.Next(0, 2000);
+                            int x = previousPoint.X;
+                            int y = previousPoint.Y;
+                            int a = rnd.Next(x - size*8, x+size*8);
+                            int b = rnd.Next(y- size*8, y + size*8);
                             Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                            
                             pen.Color = randomColor;
+                            
+                            pen.Width = 5;
                             g.DrawEllipse(pen, a, b, 5, 5);
                         }
                     }
@@ -127,19 +131,32 @@ namespace WindowsFormsApp1
             if(comboBox1.SelectedIndex == 0)
             {
                 pen_is = true;
+                shenanigans1 = false;
+                shenanigans2 = false;
+                gay = false;
             }
             else if(comboBox1.SelectedIndex == 1)
             {
                 shenanigans1 = true;
+                pen_is = false;
+                shenanigans2 = false;
+                gay = false;
             }
             else if(comboBox1.SelectedIndex == 2)
             {
                 shenanigans2 = true;
+                shenanigans1 = false;
+                pen_is = false;
+                gay = false;
             }
             else if(comboBox1.SelectedIndex == 3)
             {
+                shenanigans1 = false;
+                shenanigans2 = false;
+                pen_is = false;
                 gay = true;
             }
+            
             
         }
 
