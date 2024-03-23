@@ -89,7 +89,7 @@
             this.trackBar1.Maximum = 20;
             this.trackBar1.Minimum = 2;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(158, 56);
+            this.trackBar1.Size = new System.Drawing.Size(158, 45);
             this.trackBar1.TabIndex = 5;
             this.trackBar1.Value = 5;
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
@@ -101,7 +101,13 @@
             "Pen",
             "Shenanigans",
             "Shenanigans 2",
-            "gay"});
+            "gay",
+            "rubber",
+            "ellipse",
+            "filled ellipse",
+            "rectangle",
+            "filled rectangle",
+            "4th wall rubber"});
             this.comboBox1.Location = new System.Drawing.Point(320, 17);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
@@ -120,7 +126,7 @@
             // 
             // button6
             // 
-            this.button6.BackColor = System.Drawing.Color.White;
+            this.button6.BackColor = System.Drawing.Color.Cyan;
             this.button6.Location = new System.Drawing.Point(12, 47);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(30, 29);
@@ -177,6 +183,7 @@
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseHover += new System.EventHandler(this.Form1_MouseHover);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
