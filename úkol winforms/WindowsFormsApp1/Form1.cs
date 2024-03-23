@@ -74,30 +74,21 @@ namespace WindowsFormsApp1
                     }
                     else if (shenanigans2)
                     {
-<<<<<<< HEAD
-                        for (int i = 0; i < 50; i++)
-=======
+
+                        
                         for(int i = 0; i < 50; i++)
->>>>>>> 6c5b0e663fd924fef48b366da0429664a748d627
+
                         {
                             Point point = currentPoint;
                             int x = previousPoint.X;
                             int y = previousPoint.Y;
-<<<<<<< HEAD
+
                             int a = rnd.Next(x - size * 8, x + size * 8);
                             int b = rnd.Next(y - size * 8, y + size * 8);
                             Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
 
                             pen.Color = randomColor;
 
-=======
-                            int a = rnd.Next(x - size*8, x+size*8);
-                            int b = rnd.Next(y- size*8, y + size*8);
-                            Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-                            
-                            pen.Color = randomColor;
-                            
->>>>>>> 6c5b0e663fd924fef48b366da0429664a748d627
                             pen.Width = 5;
                             g.DrawEllipse(pen, a, b, 5, 5);
                         }
@@ -150,7 +141,6 @@ namespace WindowsFormsApp1
             rubber2 = false;
             switch (comboBox1.SelectedIndex)
             {
-<<<<<<< HEAD
                 case 0:
                     pen_is = true;
                     break;
@@ -192,36 +182,6 @@ namespace WindowsFormsApp1
                     break;
             }
 
-=======
-                pen_is = true;
-                shenanigans1 = false;
-                shenanigans2 = false;
-                gay = false;
-            }
-            else if(comboBox1.SelectedIndex == 1)
-            {
-                shenanigans1 = true;
-                pen_is = false;
-                shenanigans2 = false;
-                gay = false;
-            }
-            else if(comboBox1.SelectedIndex == 2)
-            {
-                shenanigans2 = true;
-                shenanigans1 = false;
-                pen_is = false;
-                gay = false;
-            }
-            else if(comboBox1.SelectedIndex == 3)
-            {
-                shenanigans1 = false;
-                shenanigans2 = false;
-                pen_is = false;
-                gay = true;
-            }
-            
-            
->>>>>>> 6c5b0e663fd924fef48b366da0429664a748d627
         }
 
         private void button5_Click(object sender, EventArgs e)
