@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Properties;
 
 namespace WindowsFormsApp1
 {
@@ -25,10 +26,11 @@ namespace WindowsFormsApp1
         bool gay = false;
         bool ellipse = false;
         bool rectangle = false;
-        bool ellipse_fill = false;
-        bool rectangle_fill = false;
+        bool ellipseFill = false;
+        bool rectangleFill = false;
         bool rubber = false;
         bool rubber2 = false;   
+        bool picture = false;
         public Form1()
         {
             
@@ -37,6 +39,7 @@ namespace WindowsFormsApp1
             
             // Set the default selection
             comboBox1.SelectedIndex = 0;
+            trackBar2.Value = 100;
             this.DoubleBuffered = true; // Enable double buffering to reduce flickering
             
 
@@ -89,6 +92,9 @@ namespace WindowsFormsApp1
 
                             pen.Color = randomColor;
 
+
+                            
+
                             pen.Width = 5;
                             g.DrawEllipse(pen, a, b, 5, 5);
                         }
@@ -123,24 +129,32 @@ namespace WindowsFormsApp1
         }
 
         
-
+        //size slider
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
             size = trackBar1.Value;
         }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void cancel()
         {
             pen_is = false;
             shenanigans1 = false;
             shenanigans2 = false;
             gay = false;
             ellipse = false;
+            ellipseFill = false;
             rectangle = false;
+            rectangleFill = false;
             rubber = false;
             rubber2 = false;
+            bool picture = false;
+        }
+        //brushes combobox
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cancel();
             switch (comboBox1.SelectedIndex)
             {
+
                 case 0:
                     pen_is = true;
                     break;
@@ -158,20 +172,8 @@ namespace WindowsFormsApp1
                     rubber = true;
                     brush = Brushes.White;
                     break;
+                
                 case 5:
-                    ellipse = true;
-                    break;
-                case 6:
-                    ellipse_fill = true;
-                    break;
-
-                case 7:
-                    rectangle = true;
-                    break;
-                case 8:
-                    rectangle_fill = true;
-                    break;
-                case 9:
                     rubber2 = true;
                     pen_is = true;
                     brush = Brushes.Pink;
@@ -183,12 +185,13 @@ namespace WindowsFormsApp1
             }
 
         }
-
+        //didnt name by buttons and now its too late...
         private void button5_Click(object sender, EventArgs e)
         {
             Graphics g = this.CreateGraphics();
             g.FillRectangle(Brushes.White, 0, 0, 2000, 2000);
         }
+        //red button
         private void button1_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -196,7 +199,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Red;
             }
         }
-
+        //green button
         private void button2_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -204,7 +207,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Green;
             }
         }
-
+        //blue button
         private void button3_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -212,7 +215,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Blue;
             }
         }
-
+        //black button
         private void button4_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -220,6 +223,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Black;
             }
         }
+        //cyan button
         private void button6_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -227,7 +231,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Cyan;
             }
         }
-
+        //orange button
         private void button7_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -235,7 +239,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Orange;
             }
         }
-
+        //yellow button
         private void button8_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -243,7 +247,7 @@ namespace WindowsFormsApp1
                 brush = Brushes.Yellow;
             }
         }
-
+        //purple button
         private void button9_Click(object sender, EventArgs e)
         {
             if (!rubber & !rubber2)
@@ -267,12 +271,12 @@ namespace WindowsFormsApp1
                 //ellipses are gigachads
                 g.DrawEllipse(pen, corner1.X, corner1.Y, corner2.X - corner1.X, corner2.Y - corner1.Y);
             }
-            else if(ellipse_fill)
+            else if(ellipseFill)
             {
                 Graphics g = this.CreateGraphics();
                 g.FillEllipse(brush, corner1.X, corner1.Y, corner2.X - corner1.X, corner2.Y - corner1.Y);
             }
-            else if (rectangle_fill)
+            else if (rectangleFill)
             {
                 Graphics g = this.CreateGraphics();
 
@@ -296,6 +300,59 @@ namespace WindowsFormsApp1
              g.DrawRectangle(pen, x, y, width, height);
 
             }
+            else if(picture)
+            {
+                int x = Math.Min(corner1.X, corner2.X);
+                int y = Math.Min(corner1.Y, corner2.Y);
+                int width = Math.Abs(corner2.X - corner1.X);
+                int height = Math.Abs(corner2.Y - corner1.Y);
+                Rectangle rect = new Rectangle(x, y, width, height);    
+                Graphics g = this.CreateGraphics();
+                g.DrawImage(Properties.Resources.oranges, rect);
+            }
+        }
+
+        private void buttonRect_Click(object sender, EventArgs e)
+        {
+            cancel();
+            rectangle = true;
+        }
+
+        private void buttonEll_Click(object sender, EventArgs e)
+        {
+            cancel();
+            ellipse = true;
+        }
+
+        private void buttonRectF_Click(object sender, EventArgs e)
+        {
+            cancel();
+            rectangleFill = true;
+        }
+
+        private void buttonEllF_Click(object sender, EventArgs e)
+        {
+            cancel();
+            ellipseFill = true;
+        }
+        //opacity slider
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            int opacityValue = trackBar2.Value*2;
+            Color color = ((SolidBrush)brush).Color; 
+            Color newColor = Color.FromArgb(opacityValue, color.R, color.G, color.B); 
+            brush = new SolidBrush(newColor);
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPicture_Click(object sender, EventArgs e)
+        {
+            cancel();
+            picture = true;
         }
     }
 }
