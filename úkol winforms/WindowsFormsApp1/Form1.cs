@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         bool pen_is = false;
         bool shenanigans1 = false;
         bool shenanigans2 = false;
-        bool gay = false;
+        bool rainbow = false;
         bool ellipse = false;
         bool rectangle = false;
         bool ellipseFill = false;
@@ -31,18 +31,14 @@ namespace WindowsFormsApp1
         bool rubber = false;
         bool rubber2 = false;   
         bool picture = false;
+        bool line = true;
         public Form1()
         {
-            
             InitializeComponent();
-
-            
             // Set the default selection
             comboBox1.SelectedIndex = 0;
             trackBar2.Value = 100;
-            this.DoubleBuffered = true; // Enable double buffering to reduce flickering
             
-
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -58,62 +54,48 @@ namespace WindowsFormsApp1
             if (mouseDown)
             {
                 Point currentPoint = e.Location;
-                using (Graphics g = this.CreateGraphics())
+                Graphics g = this.CreateGraphics();
+
+                Pen pen = new Pen(brush, size);
+                if (pen_is)
                 {
-                    Pen pen = new Pen(brush, size);
-                    if (pen_is)
-                    {
-
-                        g.DrawLine(pen, previousPoint, currentPoint);
-
-                    }
-                    else if (shenanigans1)
-                    {
-
-                        int a = rnd.Next(0, 2000);
-                        int b = rnd.Next(0, 2000);
-                        Point randPoint = new Point(a, b);
-                        g.DrawLine(pen, previousPoint, randPoint);
-                    }
-                    else if (shenanigans2)
-                    {
-
-                        
-                        for(int i = 0; i < 50; i++)
-
-                        {
-                            Point point = currentPoint;
-                            int x = previousPoint.X;
-                            int y = previousPoint.Y;
-
-                            int a = rnd.Next(x - size * 8, x + size * 8);
-                            int b = rnd.Next(y - size * 8, y + size * 8);
-                            Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-
-                            pen.Color = randomColor;
-
-
-                            
-
-                            pen.Width = 5;
-                            g.DrawEllipse(pen, a, b, 5, 5);
-                        }
-                    }
-                    else if (gay)
-                    {
-
-                        Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-                        pen.Color = randomColor;
-
-
-                        // Start the timer
-
-                        g.DrawLine(pen, previousPoint, currentPoint);
-                    }
-                    
-
-                    previousPoint = currentPoint;
+                    g.DrawLine(pen, previousPoint, currentPoint);
                 }
+                else if (shenanigans1)
+                {
+
+                    int a = rnd.Next(0, 2000);
+                    int b = rnd.Next(0, 2000);
+                    Point randPoint = new Point(a, b);
+                    g.DrawLine(pen, previousPoint, randPoint);
+                }
+                else if (shenanigans2)
+                {
+
+
+                    for (int i = 0; i < 50; i++)
+
+                    {
+                        Point point = currentPoint;
+                        int x = previousPoint.X;
+                        int y = previousPoint.Y;
+
+                        int a = rnd.Next(x - size * 8, x + size * 8);
+                        int b = rnd.Next(y - size * 8, y + size * 8);
+                        Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+
+                        pen.Color = randomColor;
+                        pen.Width = 5;
+                        g.DrawEllipse(pen, a, b, 5, 5);
+                    }
+                }
+                else if (rainbow)
+                {
+                    Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                    pen.Color = randomColor;
+                    g.DrawLine(pen, previousPoint, currentPoint);
+                }
+                previousPoint = currentPoint;
             }
         }
 
@@ -139,14 +121,15 @@ namespace WindowsFormsApp1
             pen_is = false;
             shenanigans1 = false;
             shenanigans2 = false;
-            gay = false;
+            rainbow = false;
             ellipse = false;
             ellipseFill = false;
             rectangle = false;
             rectangleFill = false;
             rubber = false;
             rubber2 = false;
-            bool picture = false;
+            picture = false;
+            line = false;
         }
         //brushes combobox
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -165,22 +148,23 @@ namespace WindowsFormsApp1
                     shenanigans2 = true;
                     break;
                 case 3:
-                    gay = true;
+                    rainbow = true;
                     break;
                 case 4:
                     pen_is = true;
                     rubber = true;
                     brush = Brushes.White;
                     break;
-                
                 case 5:
                     rubber2 = true;
                     pen_is = true;
                     brush = Brushes.Pink;
                     this.TransparencyKey = Color.Pink;
                     break;
+                case 6:
+                    line = true;
+                    break;
                 default:
-                    
                     break;
             }
 
@@ -309,6 +293,11 @@ namespace WindowsFormsApp1
                 Rectangle rect = new Rectangle(x, y, width, height);    
                 Graphics g = this.CreateGraphics();
                 g.DrawImage(Properties.Resources.oranges, rect);
+            }
+            else if(line)
+            {
+                Graphics g = this.CreateGraphics();
+                g.DrawLine(pen, corner1, corner2);
             }
         }
 

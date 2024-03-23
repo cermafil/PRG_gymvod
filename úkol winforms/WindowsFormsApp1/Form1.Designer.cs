@@ -112,12 +112,13 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "Pen",
-            "Shenanigans",
-            "Shenanigans 2",
-            "gay",
+            "pen",
+            "random lines",
+            "rainbow spray",
+            "rainbow",
             "rubber",
-            "4th wall rubber"});
+            "4th wall rubber",
+            "line"});
             this.comboBox1.Location = new System.Drawing.Point(389, 40);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
